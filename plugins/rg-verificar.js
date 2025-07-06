@@ -11,18 +11,17 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
     if (user.registered === true) {
         return m.reply(`💙 𝗬𝗮 𝘁𝗲 𝗲𝗻𝗰𝘂𝗲𝗻𝘁𝗿𝗮𝘀 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗱𝗼.\n\n¿𝗤𝘂𝗶𝗲𝗿𝗲 𝘃𝗼𝗹𝘃𝗲𝗿 𝗮 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗿𝘀𝗲?\n\n𝗨𝘀𝗲 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼 𝗽𝗮𝗿𝗮 𝗲𝗹𝗶𝗺𝗶𝗻𝗮𝗿 𝘀𝘂 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗼.\n*${usedPrefix}unreg*`)
     }
-    
+
     if (!Reg.test(text)) return m.reply(`Eʟ ғᴏʀᴍᴀᴛᴏ ɪɴɢʀᴇsᴀᴅᴏ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴏ\n\nUsᴏ ᴅᴇʟ ᴄᴏᴍᴀɴᴅᴏ: ${usedPrefix + command} 𝗻𝗼𝗺𝗯𝗿𝗲.𝗲𝗱𝗮𝗱\nEᴊᴇᴍᴘʟᴏ : *${usedPrefix + command} ${name2}.14*`)
-    
+
     let [_, name, splitter, age] = text.match(Reg)
-    if (!name) return m.reply('💙 Eʟ ɴᴏʍ𝗯𝗿𝗲 ɴᴏ ᴘᴜᴇᴅᴇ ᴇsᴛᴀʀ ᴠᴀᴄɪᴏ.')
+    if (!name) return m.reply('💙 Eʟ ɴᴏ𝗺𝗯𝗿𝗲 ɴᴏ ᴘᴜᴇᴅᴇ ᴇsᴛᴀʀ ᴠᴀᴄɪᴏ.')
     if (!age) return m.reply('💙 Lᴀ ᴇᴅᴀᴅ ɴᴏ ᴘᴜᴇᴅᴇ ᴇsᴛᴀʀ ᴠᴀᴄɪ́ᴀ.')
     if (name.length >= 100) return m.reply('💙 El nombre es demasiado largo.')
-    
+
     age = parseInt(age)
-    if (age > 100) return m.reply('*ʟᴀ ᴇᴅᴀᴅ ɪɴɢʀᴇsᴀᴅᴀ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴀ*')
-    if (age < 5) return m.reply('*ʟᴀ ᴇᴅᴀᴅ ɪɴɢʀᴇsᴀᴅᴀ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴀ*')
-    
+    if (age > 100 || age < 5) return m.reply('*ʟᴀ ᴇᴅᴀᴅ ɪɴɢʀᴇsᴀᴅᴀ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴀ*')
+
     user.name = name.trim()
     user.age = age
     user.regTime = +new Date
@@ -34,17 +33,17 @@ let handler = async function (m, { conn, text, args, usedPrefix, command }) {
 
     let who;
     if (m.quoted && m.quoted.sender) {
-        who = m.quoted.sender;
+        who = m.quoted.sender
     } else {
-        who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+        who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
     }
 
-    let api = await axios.get(`https://delirius-apiofc.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`);
+    let api = await axios.get(`https://delirius-apiofc.vercel.app/tools/country?text=${PhoneNumber('+' + who.replace('@s.whatsapp.net', '')).getNumber('international')}`)
+    let userNationalityData = api.data.result
+    let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido'
 
-let userNationalityData = api.data.result;
-    let userNationality = userNationalityData ? `${userNationalityData.name} ${userNationalityData.emoji}` : 'Desconocido';
-    
     let sn = createHash('md5').update(m.sender).digest('hex')
+    
     let regbot = `┏━━━━━━━━━━━━━━━━━━⬣
 ┃⋄ *🎩 𝐑𝐞𝐠𝐢𝐬𝐭𝐫𝐨 - 𝐑𝐞𝐦𝐛𝐨𝐭*
 ┗━━━━━━━━━━━━━━━━━━⬣\n`
@@ -58,31 +57,21 @@ let userNationalityData = api.data.result;
     regbot += `• 5 RemCoins 😽\n> `
     regbot += `• 245 Experiencia 💸\n> `
     regbot += `• 12 Tokens 💰\n`
-    regbot += `꒷꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒷꒦꒷\n> `
-    regbot += `${publi}`
+    regbot += `꒷꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒦꒷꒷꒦꒷\n\n`
+    regbot += `🦊 *Canal OFC:* https://whatsapp.com/channel/0029VapASNA9cDDT9yfhXr30`
 
     await m.react('📪')
     await conn.sendMessage(m.chat, {
-        text: regbot,
-        contextInfo: {
-            externalAdReply: {
-                title: '⊱『🦁𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥🦁』⊰',
-                body: dev,
-                thumbnailUrl: 'https://files.catbox.moe/ojsmx7.jpeg',
-                sourceUrl: 'https://whatsapp.com/channel/0029VapASNA9cDDT9yfhXr30',
-                mediaType: 1,
-                showAdAttribution: true,
-                renderLargerThumbnail: true
-            }
-        }
-    }, { quoted: m });
+        image: { url: 'https://files.catbox.moe/ojsmx7.jpeg' },
+        caption: regbot
+    }, { quoted: m })
 
-    let channelID = '120363387375075395@newsletter';
-    let messageContent = `◉ *Usuarios:* ${m.pushName || 'Anónimo'}\n◉ *País:* ${userNationality || 'Desconocido'}\n◉ *Verificación:* ${user.name}\n◉ *Edad:* ${age} años\n◉ *Número de serie:*\n⤷ ${sn}\n\n😽 *Recompensa:* 600 Remcoins 😼\n*¡Bienvenido/a al bot!*`;
-    
+    let channelID = '120363387375075395@newsletter'
+    let messageContent = `◉ *Usuarios:* ${m.pushName || 'Anónimo'}\n◉ *País:* ${userNationality || 'Desconocido'}\n◉ *Verificación:* ${user.name}\n◉ *Edad:* ${age} años\n◉ *Número de serie:*\n⤷ ${sn}\n\n😽 *Recompensa:* 600 Remcoins 😼\n*¡Bienvenido/a al bot!*`
+
     await conn.sendMessage(channelID, {
-        text: messageContent, ...rcanal
-    });
+        text: messageContent
+    })
 }
 
 handler.help = ['rem']
