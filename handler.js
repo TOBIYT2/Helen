@@ -175,17 +175,6 @@ export async function handler(chatUpdate) {
         if (typeof m.text !== 'string')
             m.text = ''
 
-      // 🔒 BLOQUEO GLOBAL SI EL BOT ESTÁ APAGADO
-let estadoBot = { activo: true }
-try {
-  estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
-} catch (e) {
-  console.log('[ADOBOT] No se pudo leer el estado del bot.')
-}
-const botNumber = conn.user.jid.split('@')[0]
-const senderNumber = m.sender.split('@')[0]
-if (!estadoBot.activo && botNumber !== senderNumber) return
-
 
         let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
