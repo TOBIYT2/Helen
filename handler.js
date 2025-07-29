@@ -17,6 +17,23 @@ export async function handler(chatUpdate) {
     this.msgqueque = this.msgqueque || []
     if (!chatUpdate)
         return
+
+    // 🔒 BLOQUEO TOTAL SI EL BOT ESTÁ APAGADO
+let estadoBot = { activo: true }
+try {
+  estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
+} catch (e) {
+  console.log('[ADOBOT] No se pudo leer el estado del bot.')
+}
+
+const botNumber = (this.user?.jid || '').split('@')[0]
+const senderNumber = (m.sender || '').split('@')[0]
+
+if (!estadoBot.activo && botNumber !== senderNumber) {
+  console.log('[ADOBOT] Ignorado por apagado.')
+  return
+}
+    
     this.pushMessage(chatUpdate.messages).catch(console.error)
     let m = chatUpdate.messages[chatUpdate.messages.length - 1]
     if (!m)
