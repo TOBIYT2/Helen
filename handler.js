@@ -216,9 +216,14 @@ try {
 } catch (e) {
   console.log('[ADOBOT] No se pudo leer el estado del bot.')
 }
-const botNumber = conn.user.jid.split('@')[0]
+
+const botNumber = this.user.jid.split('@')[0] // <--- esta es la línea corregida
 const senderNumber = m.sender.split('@')[0]
-if (!estadoBot.activo && botNumber !== senderNumber) return // ⛔️ Detiene TODO antes de ejecutar comandos
+
+if (!estadoBot.activo && botNumber !== senderNumber) {
+  console.log('[ADOBOT] Ignorando mensaje porque el bot está apagado.')
+  return
+}
       
         for (let name in global.plugins) {
             let plugin = global.plugins[name]
