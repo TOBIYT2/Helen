@@ -1,7 +1,5 @@
 import fs from 'fs'
 
-export async function handler(m, conn, ...args) {
-
 import { smsg } from './lib/simple.js'
 import { format } from 'util' 
 import { fileURLToPath } from 'url'
