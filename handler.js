@@ -23,7 +23,8 @@ export async function handler(chatUpdate) {
     if (!m)
         return
 
-    let estadoBot = { activo: true }
+    // 🔒 BLOQUEO TOTAL SI EL BOT ESTÁ APAGADO (excepto .adobot on del BOT)
+let estadoBot = { activo: true }
 try {
   estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
 } catch (e) {
@@ -33,12 +34,13 @@ try {
 const botNumber = (this.user?.jid || '').split('@')[0]
 const senderNumber = (m.sender || '').split('@')[0]
 
-// Permitir que el comando .adobot on funcione incluso apagado
-if (!estadoBot.activo && botNumber !== senderNumber) {
-  if (m.text?.toLowerCase().startsWith('.adobot on')) {
-    console.log('[ADOBOT] Ejecutando .adobot on desde apagado.')
-    // sigue, no hacemos return
-  } else {
+// Aseguramos que el texto sea string para poder usar .startsWith
+m.text = m.text || ''
+
+if (!estadoBot.activo) {
+  const esBot = senderNumber === botNumber
+  const esEncendido = m.text.toLowerCase().startsWith('.adobot on')
+  if (!(esBot && esEncendido)) {
     console.log('[ADOBOT] Ignorado por apagado.')
     return
   }
