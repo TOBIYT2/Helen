@@ -176,7 +176,6 @@ export async function handler(chatUpdate) {
             m.text = ''
 
       // 🔒 BLOQUEO GLOBAL SI EL BOT ESTÁ APAGADO
-import fs from 'fs'
 let estadoBot = { activo: true }
 try {
   estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
