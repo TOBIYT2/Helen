@@ -1,20 +1,6 @@
 import fs from 'fs'
 
 export async function handler(m, conn, ...args) {
-  let estado
-  try {
-    estado = JSON.parse(fs.readFileSync('./estado-bot.json'))
-  } catch (e) {
-    estado = { activo: true }
-  }
-
-  const botNumber = conn.user.jid.split('@')[0]
-  const senderNumber = m.sender.split('@')[0]
-
-  if (!estado.activo && botNumber !== senderNumber) return // Bloquea todo si está apagado
-
-  // ... aquí sigue tu código normal del handler
-}
 
 import { smsg } from './lib/simple.js'
 import { format } from 'util' 
