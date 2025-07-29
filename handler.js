@@ -26,10 +26,6 @@ export async function handler(chatUpdate) {
     if (!m)
         return
 
-  let m = chatUpdate.messages[chatUpdate.messages.length - 1]
-if (!m)
-    return
-
 // ✅ AQUÍ el bloqueo
 let estadoBot = { activo: true }
 try {
