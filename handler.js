@@ -39,23 +39,6 @@ export async function handler(chatUpdate) {
     let m = chatUpdate.messages[chatUpdate.messages.length - 1]
     if (!m)
         return
-
-  // 🔒 Bloqueo total si el bot está apagado
-let estadoBot = { activo: true }
-try {
-  estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
-} catch (e) {
-  console.log('[ADOBOT] No se pudo leer el estado del bot.')
-}
-
-const botNumber = this.user.jid.split('@')[0]
-const senderNumber = m.sender.split('@')[0]
-
-// Bloquea todo: comandos, mensajes, eventos, TODO (excepto el mismo bot)
-if (!estadoBot.activo && botNumber !== senderNumber) {
-  console.log('[ADOBOT] Ignorado por apagado.')
-  return
-}
   
     if (global.db.data == null)
         await global.loadDatabase()
