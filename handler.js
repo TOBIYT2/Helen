@@ -227,22 +227,6 @@ if (!estadoBot.activo && botNumber !== senderNumber) {
 
         const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
 
-      // 🔒 BLOQUEO DEFINITIVO SI EL BOT ESTÁ APAGADO
-let estadoBot = { activo: true }
-try {
-  estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
-} catch (e) {
-  console.log('[ADOBOT] No se pudo leer el estado del bot.')
-}
-
-const botNumber = this.user.jid.split('@')[0] // <--- esta es la línea corregida
-const senderNumber = m.sender.split('@')[0]
-
-if (!estadoBot.activo && botNumber !== senderNumber) {
-  console.log('[ADOBOT] Ignorando mensaje porque el bot está apagado.')
-  return
-}
-      
         for (let name in global.plugins) {
             let plugin = global.plugins[name]
             if (!plugin)
