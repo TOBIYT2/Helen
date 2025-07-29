@@ -9,20 +9,20 @@ let handler = async (m, { args, conn }) => {
   try {
     estado = JSON.parse(fs.readFileSync('./estado-bot.json'))
   } catch (e) {
-    // Si el archivo no existe, se mantiene activo por defecto
+    // Si no existe, se crea
   }
 
   const opcion = args[0]?.toLowerCase()
   if (opcion === 'on') {
     estado.activo = true
     fs.writeFileSync('./estado-bot.json', JSON.stringify(estado))
-    await m.reply('✅ Bot encendido correctamente.')
+    return m.reply('✅ Bot encendido correctamente.')
   } else if (opcion === 'off') {
     estado.activo = false
     fs.writeFileSync('./estado-bot.json', JSON.stringify(estado))
-    await m.reply('🛑 Bot apagado correctamente.')
+    return m.reply('🛑 Bot apagado correctamente.')
   } else {
-    await m.reply('📌 Usa:\n.adobot on\n.adobot off')
+    return m.reply('📌 Usa:\n.adobot on\n.adobot off')
   }
 }
 
