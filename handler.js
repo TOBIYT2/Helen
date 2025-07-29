@@ -23,8 +23,7 @@ export async function handler(chatUpdate) {
     if (!m)
         return
 
-    // 🔒 BLOQUEO TOTAL SI EL BOT ESTÁ APAGADO
-let estadoBot = { activo: true }
+    let estadoBot = { activo: true }
 try {
   estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
 } catch (e) {
