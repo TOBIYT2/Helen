@@ -33,9 +33,15 @@ try {
 const botNumber = (this.user?.jid || '').split('@')[0]
 const senderNumber = (m.sender || '').split('@')[0]
 
+// Permitir que el comando .adobot on funcione incluso apagado
 if (!estadoBot.activo && botNumber !== senderNumber) {
-  console.log('[ADOBOT] Ignorado por apagado.')
-  return
+  if (m.text?.toLowerCase().startsWith('.adobot on')) {
+    console.log('[ADOBOT] Ejecutando .adobot on desde apagado.')
+    // sigue, no hacemos return
+  } else {
+    console.log('[ADOBOT] Ignorado por apagado.')
+    return
+  }
 }
     
     if (global.db.data == null)
