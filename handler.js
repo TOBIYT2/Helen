@@ -208,6 +208,18 @@ export async function handler(chatUpdate) {
         const isBotAdmin = bot?.admin || false
 
         const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins')
+
+      // 🔒 BLOQUEO DEFINITIVO SI EL BOT ESTÁ APAGADO
+let estadoBot = { activo: true }
+try {
+  estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
+} catch (e) {
+  console.log('[ADOBOT] No se pudo leer el estado del bot.')
+}
+const botNumber = conn.user.jid.split('@')[0]
+const senderNumber = m.sender.split('@')[0]
+if (!estadoBot.activo && botNumber !== senderNumber) return // ⛔️ Detiene TODO antes de ejecutar comandos
+      
         for (let name in global.plugins) {
             let plugin = global.plugins[name]
             if (!plugin)
