@@ -22,8 +22,15 @@ export async function handler(chatUpdate) {
     let m = chatUpdate.messages[chatUpdate.messages.length - 1]
     if (!m)
         return
+    
+    if (global.db.data == null)
+        await global.loadDatabase()
+    try {
+        m = smsg(this, m) || m
+        if (!m)
+            return
 
-    // 🔒 BLOQUEO TOTAL SI EL BOT ESTÁ APAGADO (excepto .adobot on del BOT)
+        // 🔒 BLOQUEO TOTAL SI EL BOT ESTÁ APAGADO (excepto .adobot on enviado por el bot)
 let estadoBot = { activo: true }
 try {
   estadoBot = JSON.parse(fs.readFileSync('./estado-bot.json'))
@@ -34,24 +41,18 @@ try {
 const botNumber = (this.user?.jid || '').split('@')[0]
 const senderNumber = (m.sender || '').split('@')[0]
 
-// Aseguramos que el texto sea string para poder usar .startsWith
-m.text = m.text || ''
-
 if (!estadoBot.activo) {
   const esBot = senderNumber === botNumber
-  const esEncendido = m.text.toLowerCase().startsWith('.adobot on')
+  const esEncendido = (m.text || '').toLowerCase().startsWith('.adobot on')
+
   if (!(esBot && esEncendido)) {
     console.log('[ADOBOT] Ignorado por apagado.')
     return
+  } else {
+    console.log('[ADOBOT] Permitiendo encendido...')
   }
 }
-    
-    if (global.db.data == null)
-        await global.loadDatabase()
-    try {
-        m = smsg(this, m) || m
-        if (!m)
-            return
+        
         m.exp = 0
         m.estrellas = false
         try {
