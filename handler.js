@@ -1,6 +1,5 @@
 import fs from 'fs'
 
-import { smsg } from './lib/simple.js'
 import { format } from 'util' 
 import { fileURLToPath } from 'url'
 import path, { join } from 'path'
